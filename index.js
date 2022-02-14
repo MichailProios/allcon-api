@@ -5,6 +5,7 @@ const listEndpoints = require("express-list-endpoints");
 const compression = require("compression");
 const helmet = require("helmet");
 const cors = require("cors");
+const pjson = require("./package.json");
 /*****************************************************************************************************************************/
 
 //https
@@ -37,7 +38,9 @@ app.use(express.json());
 //Endpoints
 /*****************************************************************************************************************************/
 app.get("/", (req, res) => {
-  res.send("Hello World, from express");
+  res.send(
+    pjson.description + " v" + pjson.version + "<br/> <br/>" + new Date()
+  );
 });
 
 app.get("/endpoints", function (req, res) {
@@ -52,7 +55,6 @@ app.use("/api", emailRoutes);
 const httpsOptions = {
   key: fs.readFileSync("./security/key.pem"),
   cert: fs.readFileSync("./security/cert.pem"),
-  //   passphrase: "test",
 };
 
 const serverHttps = https.createServer(httpsOptions, app).listen(8000, () => {
