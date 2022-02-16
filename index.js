@@ -22,17 +22,17 @@ const emailRoutes = require("./routes/emailRoutes");
 //Server Options
 /*****************************************************************************************************************************/
 const app = express();
-// app.use(
-//   compression({
-//     filter: function () {
-//       return true;
-//     },
-//   })
-// );
-//app.use(helmet());
-// app.use(cookieParser());
+app.use(
+  compression({
+    filter: function () {
+      return true;
+    },
+  })
+);
+app.use(helmet());
+//app.use(cookieParser());
 app.use(express.json());
-//app.use(cors({ origin: true, credentials: true }));
+app.use(cors({ origin: true, credentials: true }));
 /*****************************************************************************************************************************/
 
 //Endpoints
@@ -53,11 +53,11 @@ app.use("/api", emailRoutes);
 //Server
 /*****************************************************************************************************************************/
 const httpsOptions = {
-  key: fs.readFileSync("./security/key.pem"),
-  cert: fs.readFileSync("./security/cert.pem"),
+  key: fs.readFileSync("D:/Websites/allcon-api/security/key.pem"),
+  cert: fs.readFileSync("D:/Websites/allcon-api/security/cert.pem"),
 };
 
-const serverHttps = https.createServer(httpsOptions, app).listen(8000, () => {
-  console.log("HTTPS server listening on port " + 8000);
+const serverHttps = https.createServer(httpsOptions, app).listen(2096, () => {
+  console.log("HTTPS server listening on port " + 2096);
 });
 /*****************************************************************************************************************************/

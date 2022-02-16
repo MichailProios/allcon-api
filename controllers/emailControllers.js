@@ -4,6 +4,18 @@ const nodemailer = require("nodemailer");
 const moment = require("moment");
 
 const post_ContactUsEmail = asyncHandler(async (req, res, next) => {
+  const {
+    firstName,
+    lastName,
+    email,
+    phoneNumber,
+    addressLine,
+    city,
+    zip,
+    state,
+    inquiry,
+  } = req.body;
+
   try {
     let transporter = nodemailer.createTransport({
       host: "allconcontracting-com.mail.protection.outlook.com",
@@ -13,36 +25,21 @@ const post_ContactUsEmail = asyncHandler(async (req, res, next) => {
       },
     });
 
-    transporter.verify(function (error, success) {
-      if (error) {
-        console.log(error, "Nodemailer Verify Error".bgRed);
-        //return res.status(500).json({ error });
-      } else {
-        console.log("Nodemailer Ready".bgGreen);
-        // return res.status(200).json({ success });
-      }
-    });
-
     const output = `
-    test
           `;
 
     let info = await transporter.sendMail(
       {
-        from: `michaelp@allconcontracting.com`,
+        from: email,
         to: "michaelp@allconcontracting.com",
-        subject: `test`,
+        subject: `Allcon Contracting Website Inquiry`,
         html: output,
       },
       (error) => {
         if (!error) {
-          console.log("Success".bgGreen);
-          return res.status(200).json({
-            success: "Your email has been sent.".bgGreen,
-          });
+          return res.status(200).send("Email Sent Successfully");
         } else {
-          console.log(error, "Failure".bgRed);
-          return res.status(500).json({ error });
+          return res.status(500).send(error);
         }
       }
     );
