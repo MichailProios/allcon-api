@@ -17,18 +17,19 @@ const https = require("https");
 //Routes
 /*****************************************************************************************************************************/
 const emailRoutes = require("./routes/emailRoutes");
+const fileRoutes = require("./routes/fileRoutes");
 /*****************************************************************************************************************************/
 
 //Server Options
 /*****************************************************************************************************************************/
 const app = express();
-app.use(
-  compression({
-    filter: function () {
-      return true;
-    },
-  })
-);
+// app.use(
+//   compression({
+//     filter: function () {
+//       return true;
+//     },
+//   })
+// );
 app.use(helmet());
 //app.use(cookieParser());
 app.use(express.json());
@@ -48,6 +49,7 @@ app.get("/endpoints", function (req, res) {
 });
 
 app.use("/api", emailRoutes);
+app.use("/files", fileRoutes);
 /*****************************************************************************************************************************/
 
 //Server
